@@ -1,0 +1,86 @@
+name: Collect Sales
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+    - cron: "55 14 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "collect | aggregate | all"
+        default: "all"
+        required: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: collect-sales
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CAFE24_MALL_ID:        ${{ secrets.CAFE24_MALL_ID }}
+      CAFE24_CLIENT_ID:      ${{ secrets.CAFE24_CLIENT_ID }}
+      CAFE24_CLIENT_SECRET:  ${{ secrets.CAFE24_CLIENT_SECRET }}
+      CAFE24_REFRESH_TOKEN:  ${{ secrets.CAFE24_REFRESH_TOKEN }}
+      SMARTSTORE_CLIENT_ID:     ${{ secrets.SMARTSTORE_CLIENT_ID }}
+      SMARTSTORE_CLIENT_SECRET: ${{ secrets.SMARTSTORE_CLIENT_SECRET }}
+      COUPANG_VENDOR_ID:  ${{ secrets.COUPANG_VENDOR_ID }}
+      COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
+      COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
+      MUSINSA_PARTNER_ID: ${{ secrets.MUSINSA_PARTNER_ID }}
+      MUSINSA_API_KEY:    ${{ secrets.MUSINSA_API_KEY }}
+      ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
+      SHOPBY_MALL_ID:       ${{ secrets.SHOPBY_MALL_ID }}
+      SHOPBY_CLIENT_ID:     ${{ secrets.SHOPBY_CLIENT_ID }}
+      SHOPBY_CLIENT_SECRET: ${{ secrets.SHOPBY_CLIENT_SECRET }}
+      KAKAOSTYLE_API_KEY: ${{ secrets.KAKAOSTYLE_API_KEY }}
+      DAILY_GOAL_KRW: ${{ vars.DAILY_GOAL_KRW }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: ${{ hashFiles('**/package-lock.json') != '' && 'npm' || '' }}
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
+      - name: Collect (실시간)
+        if: ${{ github.event.schedule == '*/15 * * * *' || github.event.inputs.mode == 'collect' || github.event.inputs.mode == 'all' || github.event.inputs.mode == '' }}
+        run: npm run collect
+      - name: Aggregate (일/월/연)
+        if: ${{ github.event.schedule == '55 14 * * *' || github.event.inputs.mode == 'aggregate' || github.event.inputs.mode == 'all' }}
+        run: npm run aggregate
+      - name: Commit & push
+        run: |
+          git config user.name  "sales-bot"
+          git config user.email "sales-bot@users.noreply.github.com"
+          git add data/*.json
+          if git diff --cached --quiet; then
+            echo "변경사항 없음"
+          else
+            git commit -m "chore(data): update sales snapshot $(date -u +%FT%TZ)"
+            git push
+          fi
+      - name: Pull latest
+        run: git pull --rebase || true
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4
