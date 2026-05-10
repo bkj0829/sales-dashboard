@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>실시간 통합 매출 대시보드</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">📊</span>
+      <div>
+        <h1>통합 매출 대시보드</h1>
+        <p class="subtitle">카페24 · 샵바이 · 무신사 · 에이블리 · 스마트스토어 · 쿠팡 · 카카오스타일</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span id="last-updated" class="updated">불러오는 중…</span>
+      <button id="refresh-btn" class="btn btn-primary" type="button">
+        <span class="btn-icon" aria-hidden="true">⟳</span>
+        새로고침
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 금일 매출 현황 (실시간) -->
+    <section class="panel panel-today">
+      <div class="panel-head">
+        <h2>금일 매출 현황 <span class="live-dot" title="실시간"></span></h2>
+        <span id="today-date" class="muted"></span>
+      </div>
+
+      <div class="today-grid">
+        <article class="kpi kpi-total">
+          <p class="kpi-label">전체 합계</p>
+          <p class="kpi-value" id="kpi-total">₩0</p>
+          <p class="kpi-sub" id="kpi-total-sub">주문 0건 · 평균 ₩0</p>
+        </article>
+        <article class="kpi">
+          <p class="kpi-label">전일 대비</p>
+          <p class="kpi-value" id="kpi-vs-yesterday">—</p>
+          <p class="kpi-sub" id="kpi-vs-yesterday-sub">어제 ₩0</p>
+        </article>
+        <article class="kpi">
+          <p class="kpi-label">목표 달성률</p>
+          <p class="kpi-value" id="kpi-goal">—</p>
+          <p class="kpi-sub" id="kpi-goal-sub">목표 ₩0</p>
+        </article>
+      </div>
+
+      <div class="channels" id="channel-cards">
+        <!-- 채널 카드: JS에서 동적 생성 -->
+      </div>
+    </section>
+
+    <!-- 누적 데이터 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>누적 매출 추이</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-range="daily" role="tab">일별 (30일)</button>
+          <button class="tab" data-range="monthly" role="tab">월별 (12개월)</button>
+          <button class="tab" data-range="yearly" role="tab">연별</button>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="trend-chart"></canvas>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table" id="data-table">
+          <thead>
+            <tr id="data-table-head"></tr>
+          </thead>
+          <tbody id="data-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 채널별 비중 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>채널별 비중 (선택 기간)</h2>
+        <span class="muted" id="share-range-label">일별</span>
+      </div>
+      <div class="share-grid">
+        <div class="chart-wrap chart-wrap-sm">
+          <canvas id="share-chart"></canvas>
+        </div>
+        <ul class="share-legend" id="share-legend"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>데이터 출처: 각 판매 채널 공식 API · GitHub Actions 자동 수집</p>
+    <p class="muted small">민감 정보는 GitHub Secrets에 저장되며 브라우저로 노출되지 않습니다.</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

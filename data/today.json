@@ -1,0 +1,15 @@
+{
+  "date": "",
+  "updatedAt": "",
+  "dailyGoal": 0,
+  "yesterdayTotal": 0,
+  "channels": {
+    "cafe24": {"amount": 0, "orders": 0, "status": "ok"},
+    "shopby": {"amount": 0, "orders": 0, "status": "ok"},
+    "musinsa": {"amount": 0, "orders": 0, "status": "ok"},
+    "ably": {"amount": 0, "orders": 0, "status": "ok"},
+    "smartstore": {"amount": 0, "orders": 0, "status": "ok"},
+    "coupang": {"amount": 0, "orders": 0, "status": "ok"},
+    "kakaostyle": {"amount": 0, "orders": 0, "status": "ok"}
+  }
+}

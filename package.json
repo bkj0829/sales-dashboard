@@ -1,0 +1,17 @@
+{
+  "name": "sales-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "카페24·샵바이·무신사·에이블리·스마트스토어·쿠팡·카카오스타일 통합 매출 대시보드",
+  "scripts": {
+    "collect": "node scripts/collect.js",
+    "aggregate": "node scripts/aggregate.js",
+    "all": "npm run collect && npm run aggregate",
+    "serve": "npx --yes serve@latest -p 4173 ."
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "bcryptjs": "^2.4.3"
+  }
+}
