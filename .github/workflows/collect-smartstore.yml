@@ -1,0 +1,71 @@
+name: Collect Smartstore (self-hosted)
+
+# 본인 PC(self-hosted runner)에서 스마트스토어 매출만 수집
+# - 네이버 커머스 API 가 한국 IP + 화이트리스트만 허용해서 GitHub 무료 러너로는 호출 불가
+# - PC 가 켜져 있을 때만 동작합니다 (꺼져 있으면 큐에 쌓이지 않고 그냥 스킵됨)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # 30분마다 (필요시 */15 등으로 변경)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: collect-smartstore
+  cancel-in-progress: true   # 새 실행이 들어오면 이전 실행 자동 취소 (큐 막힘 방지)
+
+jobs:
+  collect:
+    runs-on: self-hosted   # ← 본인 PC 에서 실행
+    timeout-minutes: 5
+    env:
+      SMARTSTORE_CLIENT_ID:     ${{ secrets.SMARTSTORE_CLIENT_ID }}
+      SMARTSTORE_CLIENT_SECRET: ${{ secrets.SMARTSTORE_CLIENT_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # setup-node 는 system32 내부 압축 해제 권한 문제로 실패하는 경우가 있어
+      # 본인 PC 에 이미 설치된 Node.js 를 그대로 사용. 버전만 확인.
+      - name: Verify Node.js
+        shell: cmd
+        run: |
+          node --version
+          npm --version
+
+      - name: Install dependencies
+        shell: cmd
+        run: |
+          if exist package-lock.json (npm ci) else (npm install --no-audit --no-fund)
+
+      - name: Collect Smartstore
+        shell: cmd
+        run: node scripts/collect-smartstore.js
+
+      - name: Commit & push
+        shell: cmd
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name sales-bot
+          git config user.email sales-bot@users.noreply.github.com
+          git remote set-url origin https://x-access-token:%GH_TOKEN%@github.com/%GITHUB_REPOSITORY%.git
+          git pull --rebase
+          if errorlevel 1 git rebase --abort
+          git add data/today.json
+          git diff --cached --quiet
+          if errorlevel 1 (
+            git commit -m "chore(data): smartstore snapshot"
+            git push origin HEAD:main
+            if errorlevel 1 echo ::warning::push failed
+          ) else (
+            echo no changes
+          )
+          exit /b 0
+
+      # Pages 재배포는 별도 워크플로우(collect-sales.yml)가 15분마다 자동 처리
+      # → 여기선 데이터 push 만 책임지고 종료
