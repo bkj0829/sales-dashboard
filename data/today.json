@@ -1,6 +1,6 @@
 {
   "date": "2026-05-11",
-  "updatedAt": "2026-05-11T00:55:54.369Z",
+  "updatedAt": "2026-05-11T05:43:31.177Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -33,6 +33,12 @@
       "orders": 0,
       "status": "error",
       "error": "카카오스타일 KAKAOSTYLE_API_KEY 누락"
+    },
+    "smartstore": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "스마트스토어 환경변수 누락 (SMARTSTORE_CLIENT_ID/SECRET)"
     }
   }
 }
