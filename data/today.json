@@ -1,6 +1,6 @@
 {
   "date": "2026-05-11",
-  "updatedAt": "2026-05-11T06:32:14.833Z",
+  "updatedAt": "2026-05-11T06:50:11.982Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -44,7 +44,7 @@
       "amount": 0,
       "orders": 0,
       "status": "error",
-      "error": "fetch failed"
+      "error": "카카오스타일 환경변수 누락 (KAKAOSTYLE_ACCESS_KEY / KAKAOSTYLE_SECRET_KEY)"
     }
   }
 }
