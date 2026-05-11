@@ -1,50 +1,11 @@
 {
-  "date": "2026-05-11",
-  "updatedAt": "2026-05-11T00:37:12.886Z",
+  "date": "",
+  "updatedAt": "",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
-    "cafe24": {
-      "amount": 0,
-      "orders": 0,
-      "status": "error",
-      "error": "카페24 환경변수 누락 (CAFE24_MALL_ID/CAFE24_CLIENT_ID/CAFE24_REFRESH_TOKEN)"
-    },
-    "shopby": {
-      "amount": 0,
-      "orders": 0,
-      "status": "error",
-      "error": "샵바이 환경변수 누락 (SHOPBY_MALL_ID/CLIENT_ID/CLIENT_SECRET)"
-    },
-    "musinsa": {
-      "amount": 0,
-      "orders": 0,
-      "status": "error",
-      "error": "무신사 환경변수 누락"
-    },
-    "ably": {
-      "amount": 0,
-      "orders": 0,
-      "status": "error",
-      "error": "에이블리 ABLY_API_KEY 누락"
-    },
-    "smartstore": {
-      "amount": 0,
-      "orders": 0,
-      "status": "error",
-      "error": "스마트스토어는 한국 IP 화이트리스트만 허용해서 별도 self-hosted runner 필요. collect-smartstore.yml 워크플로우 + 본인 PC에 runner 설치 후 실행됩니다."
-    },
-    "coupang": {
-      "amount": 0,
-      "orders": 0,
-      "status": "error",
-      "error": "coupang: 403 {\"path\":\"/api/v4/vendors/A00067146/ordersheets\",\"error\":\"FORBIDDEN\",\"message\":\"Your ip address 172.184.214.213 is not allowed for this request. If you need service access, please contact the Coupang seller call center. (Tel: +82-1600-9879, Email: openapisupport@coupang.com)\",\"timestamp\":1778459832756,\"status\":403}"
-    },
-    "kakaostyle": {
-      "amount": 0,
-      "orders": 0,
-      "status": "error",
-      "error": "카카오스타일 KAKAOSTYLE_API_KEY 누락"
-    }
-  }
-}
+    "cafe24": {"amount": 0, "orders": 0, "status": "ok"},
+    "shopby": {"amount": 0, "orders": 0, "status": "ok"},
+    "musinsa": {"amount": 0, "orders": 0, "status": "ok"},
+    "ably": {"amount": 0, "orders": 0, "status": "ok"},
+    "smartstore": {"amount": 0, "orders": 0, "status": "error", "error": "스마트스토어는 한국 IP 화이트리스트만 허용해서 별도 self-hosted runner 필요. collect-smart
