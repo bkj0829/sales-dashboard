@@ -152,6 +152,12 @@ function humanizeError(channelKey, errMsg) {
       fix: 'Settings → Secrets and variables → Actions 에서 해당 채널의 시크릿을 등록하세요.',
     };
   }
+  if (/self-hosted|한국 IP 화이트리스트|self hosted runner/i.test(e)) {
+    return {
+      title: '본인 PC(self-hosted runner) 설정이 필요해요',
+      fix: '네이버는 한국 고정 IP만 허용해서 GitHub 무료 서버로는 호출 불가. README의 *스마트스토어 — 특별 처리* 섹션 참고하여 self-hosted runner 설치 + IP 등록.',
+    };
+  }
   if (/IP_NOT_ALLOWED|호출이 허용되지 않은 IP/.test(e)) {
     return {
       title: '본인 PC IP가 네이버에 등록되지 않았어요',
