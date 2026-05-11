@@ -1,15 +1,45 @@
 {
-  "date": "",
-  "updatedAt": "",
+  "date": "2026-05-11",
+  "updatedAt": "2026-05-11T06:24:53.543Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
-    "cafe24":     {"amount": 0, "orders": 0, "status": "ok"},
-    "shopby":     {"amount": 0, "orders": 0, "status": "ok"},
-    "musinsa":    {"amount": 0, "orders": 0, "status": "ok"},
-    "ably":       {"amount": 0, "orders": 0, "status": "ok"},
-    "smartstore": {"amount": 0, "orders": 0, "status": "error", "error": "self-hosted runner 워크플로우(collect-smartstore.yml)가 본인 PC에서 실행되면 자동으로 갱신됩니다."},
-    "coupang":    {"amount": 0, "orders": 0, "status": "error", "error": "self-hosted runner 워크플로우(collect-smartstore.yml)가 본인 PC에서 실행되면 자동으로 갱신됩니다."},
-    "kakaostyle": {"amount": 0, "orders": 0, "status": "ok"}
+    "cafe24": {
+      "amount": 0,
+      "orders": 0,
+      "status": "ok"
+    },
+    "shopby": {
+      "amount": 0,
+      "orders": 0,
+      "status": "ok"
+    },
+    "musinsa": {
+      "amount": 0,
+      "orders": 0,
+      "status": "ok"
+    },
+    "ably": {
+      "amount": 0,
+      "orders": 0,
+      "status": "ok"
+    },
+    "smartstore": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "smartstore query: 400 {\n  \"code\" : \"4000\",\n  \"message\" : \"NotNull.commonProductOrdersRequest.productOrderNos\",\n  \"traceId\" : \"iMYnZoanTqeWV-Ej9EuAhQ^1777913307856^55653221\",\n  \"timestamp\" : \"2026-05-11T15:24:52.889+09:00\"\n}"
+    },
+    "coupang": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "self-hosted runner 워크플로우(collect-smartstore.yml)가 본인 PC에서 실행되면 자동으로 갱신됩니다."
+    },
+    "kakaostyle": {
+      "amount": 0,
+      "orders": 0,
+      "status": "ok"
+    }
   }
 }
