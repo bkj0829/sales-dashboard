@@ -1,11 +1,38 @@
 {
-  "date": "",
-  "updatedAt": "",
+  "date": "2026-05-11",
+  "updatedAt": "2026-05-11T00:55:54.369Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
-    "cafe24": {"amount": 0, "orders": 0, "status": "ok"},
-    "shopby": {"amount": 0, "orders": 0, "status": "ok"},
-    "musinsa": {"amount": 0, "orders": 0, "status": "ok"},
-    "ably": {"amount": 0, "orders": 0, "status": "ok"},
-    "smartstore": {"amount": 0, "orders": 0, "status": "error", "error": "스마트스토어는 한국 IP 화이트리스트만 허용해서 별도 self-hosted runner 필요. collect-smart
+    "cafe24": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "카페24 환경변수 누락 (CAFE24_MALL_ID/CAFE24_CLIENT_ID/CAFE24_REFRESH_TOKEN)"
+    },
+    "shopby": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "샵바이 환경변수 누락 (SHOPBY_MALL_ID/CLIENT_ID/CLIENT_SECRET)"
+    },
+    "musinsa": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "무신사 환경변수 누락"
+    },
+    "ably": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "에이블리 ABLY_API_KEY 누락"
+    },
+    "kakaostyle": {
+      "amount": 0,
+      "orders": 0,
+      "status": "error",
+      "error": "카카오스타일 KAKAOSTYLE_API_KEY 누락"
+    }
+  }
+}
