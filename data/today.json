@@ -1,28 +1,32 @@
 {
   "date": "2026-05-11",
-  "updatedAt": "2026-05-11T06:24:53.543Z",
+  "updatedAt": "2026-05-11T06:32:14.833Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
     "cafe24": {
       "amount": 0,
       "orders": 0,
-      "status": "ok"
+      "status": "error",
+      "error": "카페24 환경변수 누락 (CAFE24_MALL_ID/CAFE24_CLIENT_ID/CAFE24_REFRESH_TOKEN)"
     },
     "shopby": {
       "amount": 0,
       "orders": 0,
-      "status": "ok"
+      "status": "error",
+      "error": "샵바이 환경변수 누락 (SHOPBY_MALL_ID/CLIENT_ID/CLIENT_SECRET)"
     },
     "musinsa": {
       "amount": 0,
       "orders": 0,
-      "status": "ok"
+      "status": "error",
+      "error": "무신사 환경변수 누락"
     },
     "ably": {
       "amount": 0,
       "orders": 0,
-      "status": "ok"
+      "status": "error",
+      "error": "에이블리 ABLY_API_KEY 누락"
     },
     "smartstore": {
       "amount": 0,
@@ -39,7 +43,8 @@
     "kakaostyle": {
       "amount": 0,
       "orders": 0,
-      "status": "ok"
+      "status": "error",
+      "error": "fetch failed"
     }
   }
 }
