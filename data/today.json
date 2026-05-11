@@ -1,6 +1,6 @@
 {
   "date": "2026-05-11",
-  "updatedAt": "2026-05-11T05:49:16.723Z",
+  "updatedAt": "2026-05-11T06:01:47.720Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -38,7 +38,7 @@
       "amount": 0,
       "orders": 0,
       "status": "error",
-      "error": "스마트스토어 환경변수 누락 (SMARTSTORE_CLIENT_ID/SECRET)"
+      "error": "smartstore query: 400 {\n  \"code\" : \"4000\",\n  \"message\" : \"NotNull.commonProductOrdersRequest.productOrderNos\",\n  \"traceId\" : \"i6C9UGecR7emliXQk9Rw1Q^1777913308176^55853826\",\n  \"timestamp\" : \"2026-05-11T15:01:47.060+09:00\"\n}"
     }
   }
 }
