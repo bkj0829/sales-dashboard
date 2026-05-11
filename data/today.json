@@ -1,15 +1,15 @@
 {
-  "date": "2026-05-11",
-  "updatedAt": "2026-05-11T12:00:00.000Z",
-  "dailyGoal": 5000000,
-  "yesterdayTotal": 3000000,
+  "date": "",
+  "updatedAt": "",
+  "dailyGoal": 0,
+  "yesterdayTotal": 0,
   "channels": {
-    "cafe24":     {"amount": 1250000, "orders": 12, "status": "ok"},
-    "shopby":     {"amount": 0, "orders": 0, "status": "error", "error": "환경변수 누락"},
-    "musinsa":    {"amount": 0, "orders": 0, "status": "error", "error": "환경변수 누락"},
-    "ably":       {"amount": 480000, "orders": 5, "status": "ok"},
-    "smartstore": {"amount": 2100000, "orders": 18, "status": "ok"},
-    "coupang":    {"amount": 1820000, "orders": 23, "status": "ok"},
-    "kakaostyle": {"amount": 0, "orders": 0, "status": "error", "error": "환경변수 누락"}
+    "cafe24":     {"amount": 0, "orders": 0, "status": "ok"},
+    "shopby":     {"amount": 0, "orders": 0, "status": "ok"},
+    "musinsa":    {"amount": 0, "orders": 0, "status": "ok"},
+    "ably":       {"amount": 0, "orders": 0, "status": "ok"},
+    "smartstore": {"amount": 0, "orders": 0, "status": "error", "error": "self-hosted runner 워크플로우(collect-smartstore.yml)가 본인 PC에서 실행되면 자동으로 갱신됩니다."},
+    "coupang":    {"amount": 0, "orders": 0, "status": "error", "error": "self-hosted runner 워크플로우(collect-smartstore.yml)가 본인 PC에서 실행되면 자동으로 갱신됩니다."},
+    "kakaostyle": {"amount": 0, "orders": 0, "status": "ok"}
   }
 }
