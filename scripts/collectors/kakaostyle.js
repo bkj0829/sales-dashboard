@@ -1,24 +1,19 @@
-/**
- * 카카오스타일 (지그재그/패션바이카카오/포스티) 매출 수집기
- * - API: GraphQL @ https://openapi.zigzag.kr/1/graphql
- * - 환경변수: KAKAOSTYLE_ACCESS_KEY, KAKAOSTYLE_SECRET_KEY
- */
 const ENDPOINT = 'https://openapi.zigzag.kr/1/graphql';
 
-const ORDERS_QUERY = `
-  query OrderListByPeriod($from: DateTime!, $to: DateTime!) {
-    order_list(date_from: $from, date_to: $to, status: PAID) {
-      total_count
-      item_list {
-        id
-        order_status
-        payment_amount
+const INTROSPECTION = `
+{
+  __schema {
+    queryType {
+      fields {
+        name
+        args { name type { name kind ofType { name kind } } }
       }
     }
   }
+}
 `;
 
-export async function collectKakaostyle({ startISO, endISO }) {
+export async function collectKakaostyle() {
   const env = process.env;
   const accessKey = env.KAKAOSTYLE_ACCESS_KEY;
   const secretKey = env.KAKAOSTYLE_SECRET_KEY;
@@ -35,10 +30,7 @@ export async function collectKakaostyle({ startISO, endISO }) {
       'x-access-token': accessKey,
       'x-secret-key': secretKey,
     },
-    body: JSON.stringify({
-      query: ORDERS_QUERY,
-      variables: { from: startISO, to: endISO },
-    }),
+    body: JSON.stringify({ query: INTROSPECTION }),
   });
 
   if (!res.ok) {
@@ -47,14 +39,14 @@ export async function collectKakaostyle({ startISO, endISO }) {
 
   const json = await res.json();
   if (json.errors) {
-    throw new Error(`kakaostyle GraphQL: ${JSON.stringify(json.errors)}`);
+    throw new Error(`kakaostyle introspection: ${JSON.stringify(json.errors)}`);
   }
 
-  const items = json.data?.order_list?.item_list || [];
-  let amount = 0;
-  items.forEach(o => {
-    amount += Number(o.payment_amount || 0);
-  });
+  const fields = json.data?.__schema?.queryType?.fields || [];
+  const summary = fields.slice(0, 50).map(f => {
+    const args = (f.args || []).map(a => a.name).join(', ');
+    return args ? `${f.name}(${args})` : f.name;
+  }).join(' | ');
 
-  return { amount, orders: items.length };
+  throw new Error(`[디스커버리] 사용 가능 query (${fields.length}개): ${summary}`);
 }
