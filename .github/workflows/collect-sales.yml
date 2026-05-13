@@ -40,7 +40,8 @@ jobs:
       SHOPBY_MALL_ID:       ${{ secrets.SHOPBY_MALL_ID }}
       SHOPBY_CLIENT_ID:     ${{ secrets.SHOPBY_CLIENT_ID }}
       SHOPBY_CLIENT_SECRET: ${{ secrets.SHOPBY_CLIENT_SECRET }}
-      KAKAOSTYLE_API_KEY: ${{ secrets.KAKAOSTYLE_API_KEY }}
+      KAKAOSTYLE_ACCESS_KEY: ${{ secrets.KAKAOSTYLE_ACCESS_KEY }}
+      KAKAOSTYLE_SECRET_KEY: ${{ secrets.KAKAOSTYLE_SECRET_KEY }}
       DAILY_GOAL_KRW: ${{ vars.DAILY_GOAL_KRW }}
 
     steps:
