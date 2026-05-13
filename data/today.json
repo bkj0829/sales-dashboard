@@ -1,6 +1,6 @@
 {
   "date": "2026-05-13",
-  "updatedAt": "2026-05-13T08:48:44.548Z",
+  "updatedAt": "2026-05-13T08:55:57.668Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -44,7 +44,7 @@
       "amount": 0,
       "orders": 0,
       "status": "error",
-      "error": "kakaostyle: 400 {\"errors\":[{\"message\":\"Unknown type \\\"DateTime\\\".\",\"locations\":[{\"line\":2,\"column\":34}],\"extensions\":{\"code\":\"GRAPHQL_VALIDATION_FAILED\"}},{\"message\":\"Unknown type \\\"DateTime\\\".\",\"locations\":[{\"line\":2,\"column\":50}],\"extensions\":{\"code\":\"GRAPHQL_VALIDATION_FAILED\"}},{\"message\":\"Cannot query field \\\"order_list\\\" on type \\\"Query\\\". Did you mean \\\"order_item_list\\\" or \\\"product_list\\\"?\",\"locations\":[{\"line\":3,\"column\":5}],\"extensions\":{\"code\":\"GRAPHQL_VALIDATION_FAILED\"}}]}\n"
+      "error": "kakaostyle: 400 {\"errors\":[{\"message\":\"GraphQL introspection is not allowed by Apollo Server, but the query contained __schema or __type. To enable introspection, pass introspection: true to ApolloServer in production\",\"locations\":[{\"line\":3,\"column\":3}],\"extensions\":{\"code\":\"GRAPHQL_VALIDATION_FAILED\"}}]}\n"
     }
   }
 }
