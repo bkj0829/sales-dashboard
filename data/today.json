@@ -1,6 +1,6 @@
 {
   "date": "2026-05-14",
-  "updatedAt": "2026-05-13T21:55:55.003Z",
+  "updatedAt": "2026-05-14T00:23:33.195Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -44,7 +44,7 @@
       "amount": 0,
       "orders": 0,
       "status": "error",
-      "error": "kakaostyle: 400 {\"errors\":[{\"message\":\"GraphQL introspection is not allowed by Apollo Server, but the query contained __schema or __type. To enable introspection, pass introspection: true to ApolloServer in production\",\"locations\":[{\"line\":3,\"column\":3}],\"extensions\":{\"code\":\"GRAPHQL_VALIDATION_FAILED\"}}]}\n"
+      "error": "kakaostyle GraphQL: [{\"message\":\"authenticated_failed\",\"path\":[\"order_item_list\"],\"extensions\":{\"code\":\"authenticated_failed\",\"stack\":[\"at file:///src/$common/errors.js:47:26\",\"at ModuleJob.run (node:internal/modules/esm/module_job:271:25)\",\"at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)\"]}}]"
     }
   }
 }
