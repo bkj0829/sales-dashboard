@@ -66,6 +66,16 @@ jobs:
             echo no changes
           )
           exit /b 0
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4
+        
       # Pages 재배포는 별도 워크플로우(collect-sales.yml)가 15분마다 자동 처리
       # → 여기선 데이터 push 만 책임지고 종료
