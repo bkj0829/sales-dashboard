@@ -1,6 +1,6 @@
 {
   "date": "2026-05-14",
-  "updatedAt": "2026-05-14T06:47:17.617Z",
+  "updatedAt": "2026-05-14T08:11:26.631Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -32,7 +32,7 @@
       "amount": 0,
       "orders": 0,
       "status": "error",
-      "error": "[진단] 오늘 (2026-05-13 ~ 2026-05-14) 상태별 주문수: PAY_WAITING: 0건 | PAYED: 1건 (2026051466397701) | DISPATCHED: 2건 (2026051341250311,2026051442785201) | PURCHASE_DECIDED: 1건 (2026050943924441) | EXCHANGE_OPTION: 0건 | CANCELED: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2 | RETURNED: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2 | CANCELED_BY_NOPAYMENT: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2"
+      "error": "[진단] 오늘 (2026-05-13 ~ 2026-05-14) 상태별 주문수: PAY_WAITING: 0건 | PAYED: 1건 (2026051469106461) | DISPATCHED: 3건 (2026051341250311,2026051442785201,2026051466397701) | PURCHASE_DECIDED: 1건 (2026050943924441) | EXCHANGE_OPTION: 0건 | CANCELED: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2 | RETURNED: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2 | CANCELED_BY_NOPAYMENT: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2"
     },
     "coupang": {
       "amount": 0,
