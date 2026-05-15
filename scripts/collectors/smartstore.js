@@ -20,7 +20,7 @@ async function getAccessToken({ clientId, clientSecret }) {
   return res.json();
 }
 
-async function countByType({ accessToken, startISO, endISO, type }) {
+async function listByType({ accessToken, startISO, endISO, type }) {
   const params = new URLSearchParams({
     lastChangedFrom: startISO,
     lastChangedTo: endISO,
@@ -29,15 +29,33 @@ async function countByType({ accessToken, startISO, endISO, type }) {
   const res = await fetch(`${BASE}/v1/pay-order/seller/product-orders/last-changed-statuses?${params}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
-  if (!res.ok) {
-    return { type, error: `${res.status} ${(await res.text()).slice(0,80)}` };
-  }
+  if (!res.ok) return [];
   const json = await res.json();
   const list = json.data?.lastChangeStatuses || json.data?.lastChangedStatuses || [];
-  return { type, count: list.length, ids: list.slice(0, 3).map(x => x.productOrderId) };
+  return list.map(x => x.productOrderId).filter(Boolean);
 }
 
-export async function collectSmartstore({ startISO, endISO }) {
+async function queryDetails({ accessToken, productOrderNos }) {
+  const items = [];
+  for (let i = 0; i < productOrderNos.length; i += 300) {
+    const batch = productOrderNos.slice(i, i + 300);
+    const res = await fetch(`${BASE}/v1/pay-order/seller/product-orders/query`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ productOrderNos: batch }),
+    });
+    if (!res.ok) throw new Error(`smartstore query: ${res.status} ${await res.text()}`);
+    const json = await res.json();
+    const data = json.data || [];
+    data.forEach(x => items.push(x));
+  }
+  return items;
+}
+
+export async function collectSmartstore({ startISO, endISO, dateKST }) {
   const env = process.env;
   if (!env.SMARTSTORE_CLIENT_ID || !env.SMARTSTORE_CLIENT_SECRET) {
     throw new Error('스마트스토어 환경변수 누락 (SMARTSTORE_CLIENT_ID/SECRET)');
@@ -46,19 +64,42 @@ export async function collectSmartstore({ startISO, endISO }) {
     clientId: env.SMARTSTORE_CLIENT_ID,
     clientSecret: env.SMARTSTORE_CLIENT_SECRET,
   });
+  const accessToken = tok.access_token;
 
-  // 가능한 모든 상태별로 카운트해서 어디 숨었는지 찾기
-  const types = ['PAY_WAITING','PAYED','DISPATCHED','PURCHASE_DECIDED','EXCHANGE_OPTION','CANCELED','RETURNED','CANCELED_BY_NOPAYMENT'];
-  const results = [];
+  const types = ['PAYED', 'DISPATCHED', 'PURCHASE_DECIDED'];
+  const allIds = new Set();
   for (const t of types) {
-    results.push(await countByType({ accessToken: tok.access_token, startISO, endISO, type: t }));
+    const ids = await listByType({ accessToken, startISO, endISO, type: t });
+    ids.forEach(id => allIds.add(id));
+    await new Promise(r => setTimeout(r, 300));
   }
 
-  // 일부러 에러로 던져서 진단 패널에 결과 출력
-  const summary = results.map(r => {
-    if (r.error) return `${r.type}: ERROR ${r.error}`;
-    return `${r.type}: ${r.count}건${r.ids?.length ? ' (' + r.ids.join(',') + ')' : ''}`;
-  }).join(' | ');
+  if (allIds.size === 0) {
+    return { amount: 0, orders: 0 };
+  }
 
-  throw new Error(`[진단] 오늘 (${startISO.slice(0,10)} ~ ${endISO.slice(0,10)}) 상태별 주문수: ${summary}`);
+  const items = await queryDetails({ accessToken, productOrderNos: [...allIds] });
+
+  let amount = 0;
+  const orderSet = new Set();
+  items.forEach(it => {
+    const po = it.productOrder || it;
+    const order = it.order || {};
+    const paidStr = po.paymentDate || po.paidDate || order.paymentDate || order.paymentDateTime;
+    if (paidStr) {
+      const paidDateKST = String(paidStr).slice(0, 10);
+      if (paidDateKST !== dateKST) return;
+    }
+    const amt = Number(
+      po.totalPaymentAmount ??
+      po.totalProductAmount ??
+      order.paymentAmount ??
+      0
+    );
+    amount += amt;
+    const oid = order.orderId || po.orderId || po.productOrderId;
+    if (oid) orderSet.add(oid);
+  });
+
+  return { amount, orders: orderSet.size };
 }
