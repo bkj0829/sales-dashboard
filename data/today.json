@@ -1,6 +1,6 @@
 {
   "date": "2026-05-15",
-  "updatedAt": "2026-05-15T01:33:49.614Z",
+  "updatedAt": "2026-05-15T01:37:07.383Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -32,7 +32,7 @@
       "amount": 0,
       "orders": 0,
       "status": "error",
-      "error": "[진단] 오늘 (2026-05-14 ~ 2026-05-15) 상태별 주문수: PAY_WAITING: 0건 | PAYED: 0건 | DISPATCHED: 1건 (2026051469106461) | PURCHASE_DECIDED: 6건 (2026050554668091,2026050417928411,2026050559745891) | EXCHANGE_OPTION: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2 | CANCELED: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2 | RETURNED: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2 | CANCELED_BY_NOPAYMENT: ERROR 429 {\"code\":\"GW.RATE_LIMIT\",\"message\":\"요청이 많아 서비스를 일시적으로 사용할 수 없습니다.\",\"timestamp\":\"2"
+      "error": "smartstore query: 400 {\n  \"code\" : \"4000\",\n  \"message\" : \"NotNull.commonProductOrdersRequest.productOrderNos\",\n  \"traceId\" : \"J3nZTl9vTFOdkW7lnRDTVA^1777916743052^92482102\",\n  \"timestamp\" : \"2026-05-15T10:37:10.268+09:00\"\n}"
     },
     "coupang": {
       "amount": 0,
