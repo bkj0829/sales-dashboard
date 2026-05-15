@@ -1,6 +1,6 @@
 {
   "date": "2026-05-15",
-  "updatedAt": "2026-05-15T01:38:15.455Z",
+  "updatedAt": "2026-05-15T01:43:13.802Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -31,8 +31,7 @@
     "smartstore": {
       "amount": 0,
       "orders": 0,
-      "status": "error",
-      "error": "smartstore query: 400 {\n  \"code\" : \"4000\",\n  \"message\" : \"NotNull.commonProductOrdersRequest.productOrderNos\",\n  \"traceId\" : \"J3nZTl9vTFOdkW7lnRDTVA^1777916743052^92482102\",\n  \"timestamp\" : \"2026-05-15T10:37:10.268+09:00\"\n}"
+      "status": "ok"
     },
     "coupang": {
       "amount": 0,
