@@ -32,27 +32,42 @@ async function listByType({ accessToken, startISO, endISO, type }) {
   if (!res.ok) return [];
   const json = await res.json();
   const list = json.data?.lastChangeStatuses || json.data?.lastChangedStatuses || [];
-  return list.map(x => x.productOrderId).filter(Boolean);
+  // 반드시 문자열로 (큰 수가 number 로 들어오면 정밀도 문제)
+  return list.map(x => String(x.productOrderId || x.productOrderNo || '')).filter(Boolean);
 }
 
-async function queryDetails({ accessToken, productOrderNos }) {
-  const items = [];
-  for (let i = 0; i < productOrderNos.length; i += 300) {
-    const batch = productOrderNos.slice(i, i + 300);
+// 여러 본문 형식을 순차 시도하여 통과하는 첫 번째를 사용
+async function queryDetails({ accessToken, productOrderIds }) {
+  const formats = [
+    { label: 'productOrderIds(str)',  body: { productOrderIds: productOrderIds } },
+    { label: 'productOrderNos(str)',  body: { productOrderNos: productOrderIds } },
+    { label: 'productOrderIdList',    body: { productOrderIdList: productOrderIds } },
+    { label: 'productOrderNoList',    body: { productOrderNoList: productOrderIds } },
+    { label: 'bare-array',            body: productOrderIds },
+    { label: 'nested-common',         body: { commonProductOrdersRequest: { productOrderNos: productOrderIds } } },
+  ];
+
+  let lastError = '';
+  for (const fmt of formats) {
     const res = await fetch(`${BASE}/v1/pay-order/seller/product-orders/query`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ productOrderNos: batch }),
+      body: JSON.stringify(fmt.body),
     });
-    if (!res.ok) throw new Error(`smartstore query: ${res.status} ${await res.text()}`);
-    const json = await res.json();
-    const data = json.data || [];
-    data.forEach(x => items.push(x));
+    if (res.ok) {
+      console.log(`[smartstore] queryDetails 통과 형식: ${fmt.label}`);
+      const json = await res.json();
+      return { items: json.data || [], format: fmt.label };
+    }
+    const text = await res.text();
+    lastError = `${fmt.label}: ${res.status} ${text.slice(0,120)}`;
+    console.log(`[smartstore] ${fmt.label} 실패: ${res.status}`);
+    await new Promise(r => setTimeout(r, 200));
   }
-  return items;
+  throw new Error(`queryDetails 모든 형식 실패. 마지막: ${lastError}`);
 }
 
 export async function collectSmartstore({ startISO, endISO, dateKST }) {
@@ -78,7 +93,10 @@ export async function collectSmartstore({ startISO, endISO, dateKST }) {
     return { amount: 0, orders: 0 };
   }
 
-  const items = await queryDetails({ accessToken, productOrderNos: [...allIds] });
+  const { items, format } = await queryDetails({
+    accessToken,
+    productOrderIds: [...allIds],
+  });
 
   let amount = 0;
   const orderSet = new Set();
@@ -97,9 +115,10 @@ export async function collectSmartstore({ startISO, endISO, dateKST }) {
       0
     );
     amount += amt;
-    const oid = order.orderId || po.orderId || po.productOrderId;
+    const oid = order.orderId || po.orderId || po.productOrderId || po.productOrderNo;
     if (oid) orderSet.add(oid);
   });
 
+  console.log(`[smartstore] 사용한 형식: ${format} / 아이템 ${items.length}개`);
   return { amount, orders: orderSet.size };
 }
