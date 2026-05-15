@@ -1,6 +1,6 @@
 {
   "date": "2026-05-15",
-  "updatedAt": "2026-05-15T01:44:50.675Z",
+  "updatedAt": "2026-05-15T01:53:13.315Z",
   "dailyGoal": 0,
   "yesterdayTotal": 0,
   "channels": {
@@ -37,7 +37,7 @@
       "amount": 0,
       "orders": 0,
       "status": "error",
-      "error": "self-hosted runner 워크플로우(collect-smartstore.yml)가 본인 PC에서 실행되면 자동으로 갱신됩니다."
+      "error": "쿠팡 환경변수 누락"
     },
     "kakaostyle": {
       "amount": 0,
