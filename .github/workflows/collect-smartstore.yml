@@ -44,7 +44,7 @@ jobs:
 
       - name: Collect Smartstore
         shell: cmd
-        run: node scripts/collect-smartstore.js
+        run: node scripts/collect-coupang.js      
 
       - name: Commit & push
         shell: cmd
