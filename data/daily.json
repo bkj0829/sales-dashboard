@@ -2,20 +2,6 @@
   "range": "daily",
   "series": [
     {
-      "date": "2026-05-30",
-      "label": "05/30",
-      "channels": {
-        "cafe24": 0,
-        "shopby": 0,
-        "musinsa": 0,
-        "ably": 0,
-        "smartstore": 0,
-        "coupang": 0,
-        "kakaostyle": 0
-      },
-      "total": 0
-    },
-    {
       "date": "2026-05-31",
       "label": "05/31",
       "channels": {
@@ -830,6 +816,20 @@
     {
       "date": "2026-07-29",
       "label": "07/29",
+      "channels": {
+        "cafe24": 0,
+        "shopby": 0,
+        "musinsa": 0,
+        "ably": 0,
+        "smartstore": 0,
+        "coupang": 0,
+        "kakaostyle": 0
+      },
+      "total": 0
+    },
+    {
+      "date": "2026-07-30",
+      "label": "07/30",
       "channels": {
         "cafe24": 0,
         "shopby": 0,
